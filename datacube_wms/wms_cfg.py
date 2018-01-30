@@ -571,18 +571,18 @@ layer_cfg = [
 
             {
                 # Included as a keyword  for the layer
-                "label": "NBAR",
+                "label": "NBAR-T",
                 # Included as a keyword  for the layer
                 "type": "S2MSIARD",
                 # Included as a keyword  for the layer
                 "variant": "MSI",
                 # The WMS name for the layer
-                "name": "s2b_ard_granule",
+                "name": "s2a_ard_granule",
                 # The Datacube name for the associated data product
-                "product_name": "s2b_ard_granule",
+                "product_name": "s2a_ard_granule",
                 # The Datacube name for the associated pixel-quality product (optional)
                 # The name of the associated Datacube pixel-quality product
-                "pq_dataset": "s2b_ard_granule",
+                "pq_dataset": "s2a_ard_granule",
                 # The name of the measurement band for the pixel-quality product
                 # (Only required if pq_dataset is set)
                 "pq_band": "pixel_quality",
@@ -619,13 +619,13 @@ layer_cfg = [
                         "abstract": "Simple true-colour image, using the red, green and blue bands",
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "blue": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             }
                         },
                         # Used to clip off very bright areas.
@@ -637,13 +637,13 @@ layer_cfg = [
                         "abstract": "Simple true-colour image, using the red, green and blue bands, with cloud masking",
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                              },
                             "blue": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             }
                         },
                         # PQ masking example
@@ -663,13 +663,13 @@ layer_cfg = [
                         "abstract": "Simple true-colour image, using the red, green and blue bands, with cloud and cloud shadow masking",
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "blue": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             }
                         },
                         # PQ masking example
@@ -691,14 +691,14 @@ layer_cfg = [
                         "abstract": "Extended true-colour image, incorporating the coastal aerosol band",
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "blue": {
-                                "blue": 0.6,
-                                "aerosol": 0.4
+                                "t_blue": 0.6,
+                                "t_aerosol": 0.4
                             }
                         },
                         "scale_factor": 12.0
@@ -709,19 +709,19 @@ layer_cfg = [
                         "abstract": "False-colour image, incorporating all available spectral bands",
                         "components": {
                             "red": {
-                                "swir2": 0.255,
-                                "swir1": 0.45,
-                                "nir": 0.255,
+                                "t_swir2": 0.255,
+                                "t_swir1": 0.45,
+                                "t_nir": 0.255,
                             },
                             "green": {
-                                "nir": 0.255,
-                                "red": 0.45,
-                                "green": 0.255,
+                                "t_nir": 0.255,
+                                "t_red": 0.45,
+                                "t_green": 0.255,
                             },
                             "blue": {
-                                "green": 0.255,
-                                "blue": 0.45,
-                                "aerosol": 0.255,
+                                "t_green": 0.255,
+                                "t_blue": 0.45,
+                                "t_aerosol": 0.255,
                             }
                         },
                         "scale_factor": 12.0
@@ -732,13 +732,13 @@ layer_cfg = [
                         "abstract": "Simple false-colour image, using the near and short-wave infra-red bands",
                         "components": {
                             "red": {
-                                "swir1": 1.0
+                                "t_swir1": 1.0
                             },
                             "green": {
-                                "swir2": 1.0
+                                "t_swir2": 1.0
                             },
                             "blue": {
-                                "nir": 1.0
+                                "t_nir": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -749,13 +749,13 @@ layer_cfg = [
                         "abstract": "Coastal aerosol band, approximately 435nm to 450nm",
                         "components": {
                             "red": {
-                                "aerosol": 1.0
+                                "t_aerosol": 1.0
                             },
                             "green": {
-                                "aerosol": 1.0
+                                "t_aerosol": 1.0
                             },
                             "blue": {
-                                "aerosol": 1.0
+                                "t_aerosol": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -766,13 +766,13 @@ layer_cfg = [
                         "abstract": "Blue band, approximately 453nm to 511nm",
                         "components": {
                             "red": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             },
                             "green": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             },
                             "blue": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -783,13 +783,13 @@ layer_cfg = [
                         "abstract": "Green band, approximately 534nm to 588nm",
                         "components": {
                             "red": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "blue": {
-                                "green": 1.0
+                                "t_green": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -800,13 +800,13 @@ layer_cfg = [
                         "abstract": "Red band, roughly 637nm to 672nm",
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "blue": {
-                                "red": 1.0
+                                "t_red": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -817,13 +817,13 @@ layer_cfg = [
                         "abstract": "Near infra-red band, roughly 853nm to 876nm",
                         "components": {
                             "red": {
-                                "nir": 1.0
+                                "t_nir": 1.0
                             },
                             "green": {
-                                "nir": 1.0
+                                "t_nir": 1.0
                             },
                             "blue": {
-                                "nir": 1.0
+                                "t_nir": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -834,13 +834,13 @@ layer_cfg = [
                         "abstract": "Short wave infra-red band 1, roughly 1575nm to 1647nm",
                         "components": {
                             "red": {
-                                "swir1": 1.0
+                                "t_swir1": 1.0
                             },
                             "green": {
-                                "swir1": 1.0
+                                "t_swir1": 1.0
                             },
                             "blue": {
-                                "swir1": 1.0
+                                "t_swir1": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -851,13 +851,13 @@ layer_cfg = [
                         "abstract": "Short wave infra-red band 2, roughly 2117nm to 2285nm",
                         "components": {
                             "red": {
-                                "swir2": 1.0
+                                "t_swir2": 1.0
                             },
                             "green": {
-                                "swir2": 1.0
+                                "t_swir2": 1.0
                             },
                             "blue": {
-                                "swir2": 1.0
+                                "t_swir2": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -869,8 +869,8 @@ layer_cfg = [
                         "title": "NDVI",
                         "abstract": "Normalised Difference Vegetation Index - a derived index that correlates well with the existence of vegetation",
                         "heat_mapped": True,
-                        "index_function": lambda data: (data["nir"] - data["red"]) / (data["nir"] + data["red"]),
-                        "needed_bands": ["red", "nir"],
+                        "index_function": lambda data: (data["t_nir"] - data["t_red"]) / (data["t_nir"] + data["t_red"]),
+                        "needed_bands": ["t_red", "t_nir"],
                         # Areas where the index_function returns outside the range are masked.
                         "range": [0.0, 1.0],
                     },
@@ -879,8 +879,8 @@ layer_cfg = [
                         "title": "NDVI with cloud masking",
                         "abstract": "Normalised Difference Vegetation Index (with cloud masking) - a derived index that correlates well with the existence of vegetation",
                         "heat_mapped": True,
-                        "index_function": lambda data: (data["nir"] - data["red"]) / (data["nir"] + data["red"]),
-                        "needed_bands": ["red", "nir"],
+                        "index_function": lambda data: (data["t_nir"] - data["t_red"]) / (data["t_nir"] + data["t_red"]),
+                        "needed_bands": ["t_red", "t_nir"],
                         # Areas where the index_function returns outside the range are masked.
                         "range": [0.0, 1.0],
                         "pq_masks": [
@@ -897,8 +897,8 @@ layer_cfg = [
                         "title": "NDWI",
                         "abstract": "Normalised Difference Water Index - a derived index that correlates well with the existence of water",
                         "heat_mapped": True,
-                        "index_function": lambda data: (data["green"] - data["nir"]) / (data["nir"] + data["green"]),
-                        "needed_bands": ["green", "nir"],
+                        "index_function": lambda data: (data["t_green"] - data["t_nir"]) / (data["t_nir"] + data["t_green"]),
+                        "needed_bands": ["t_green", "t_nir"],
                         "range": [0.0, 1.0],
                     },
                     {
@@ -906,8 +906,8 @@ layer_cfg = [
                         "title": "NDBI",
                         "abstract": "Normalised Difference Buildup Index - a derived index that correlates with the existence of urbanisation",
                         "heat_mapped": True,
-                        "index_function": lambda data: (data["swir2"] - data["nir"]) / (data["swir2"] + data["nir"]),
-                        "needed_bands": ["swir2", "nir"],
+                        "index_function": lambda data: (data["t_swir2"] - data["t_nir"]) / (data["t_swir2"] + data["t_nir"]),
+                        "needed_bands": ["t_swir2", "t_nir"],
                         "range": [0.0, 1.0],
                     },
                     # Mask layers - examples of how to display raw pixel quality data.
@@ -917,8 +917,8 @@ layer_cfg = [
                         "title": "Cloud Mask",
                         "abstract": "Highlight pixels with cloud.",
                         "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.1,
-                        "needed_bands": ["red"],
+                        "index_function": lambda data: data["t_red"] * 0.0 + 0.1,
+                        "needed_bands": ["t_red"],
                         "range": [0.0, 1.0],
                         # Mask flags normally describe which areas SHOULD be shown.
                         # (i.e. pixels for which any of the declared flags are true)
@@ -943,8 +943,8 @@ layer_cfg = [
                         "title": "Cloud and Shadow Mask",
                         "abstract": "Highlight pixels with cloud or cloud shadow.",
                         "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.6,
-                        "needed_bands": ["red"],
+                        "index_function": lambda data: data["t_red"] * 0.0 + 0.6,
+                        "needed_bands": ["t_red"],
                         "range": [0.0, 1.0],
                         "pq_masks": [
                             {
@@ -963,8 +963,8 @@ layer_cfg = [
                         "title": "Cloud acca Mask",
                         "abstract": "Highlight pixels with cloud.",
                         "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.4,
-                        "needed_bands": ["red"],
+                        "index_function": lambda data: data["t_red"] * 0.0 + 0.4,
+                        "needed_bands": ["t_red"],
                         "range": [0.0, 1.0],
                         "pq_masks": [
                             {
@@ -979,8 +979,8 @@ layer_cfg = [
                         "title": "Cloud fmask Mask",
                         "abstract": "Highlight pixels with cloud.",
                         "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.8,
-                        "needed_bands": ["red"],
+                        "index_function": lambda data: data["t_red"] * 0.0 + 0.8,
+                        "needed_bands": ["t_red"],
                         "range": [0.0, 1.0],
                         "pq_masks": [
                             {
@@ -995,8 +995,8 @@ layer_cfg = [
                         "title": "Contiguous Data Mask",
                         "abstract": "Highlight pixels with non-contiguous data",
                         "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.3,
-                        "needed_bands": ["red"],
+                        "index_function": lambda data: data["t_red"] * 0.0 + 0.3,
+                        "needed_bands": ["t_red"],
                         "range": [0.0, 1.0],
                         "pq_masks": [
                             {
@@ -1013,19 +1013,19 @@ layer_cfg = [
                         "abstract": "Normalised Difference Vegetation Index (blended with RGB) - a derived index that correlates well with the existence of vegetation",
                         "component_ratio": 0.6,
                         "heat_mapped": True,
-                        "index_function": lambda data: (data["nir"] - data["red"]) / (data["nir"] + data["red"]),
-                        "needed_bands": ["red", "nir"],
+                        "index_function": lambda data: (data["t_nir"] - data["t_red"]) / (data["t_nir"] + data["t_red"]),
+                        "needed_bands": ["t_red", "t_nir"],
                         # Areas where the index_function returns outside the range are masked.
                         "range": [0.0, 1.0],
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "blue": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             }
                         },
                         "scale_factor": 12.0
@@ -1036,19 +1036,19 @@ layer_cfg = [
                         "abstract": "Normalised Difference Vegetation Index (blended with RGB and cloud masked) - a derived index that correlates well with the existence of vegetation",
                         "component_ratio": 0.6,
                         "heat_mapped": True,
-                        "index_function": lambda data: (data["nir"] - data["red"]) / (data["nir"] + data["red"]),
-                        "needed_bands": ["red", "nir"],
+                        "index_function": lambda data: (data["t_nir"] - data["t_red"]) / (data["t_nir"] + data["t_red"]),
+                        "needed_bands": ["t_red", "t_nir"],
                         # Areas where the index_function returns outside the range are masked.
                         "range": [0.0, 1.0],
                         "components": {
                             "red": {
-                                "red": 1.0
+                                "t_red": 1.0
                             },
                             "green": {
-                                "green": 1.0
+                                "t_green": 1.0
                             },
                             "blue": {
-                                "blue": 1.0
+                                "t_blue": 1.0
                             }
                         },
                         "pq_masks": [
