@@ -77,7 +77,7 @@ layer_cfg = [
                 # Included as a keyword  for the layer
                 "variant": "MSI",
                 # The WMS name for the layer
-                "name": "s2a_ard_granule",
+                "name": "s2a_ard_granule_nbar",
                 # The Datacube name for the associated data product
                 "product_name": "s2a_ard_granule",
                 # The Datacube name for the associated pixel-quality product (optional)
@@ -577,7 +577,7 @@ layer_cfg = [
                 # Included as a keyword  for the layer
                 "variant": "MSI",
                 # The WMS name for the layer
-                "name": "s2a_ard_granule",
+                "name": "s2a_ard_granule_nbar_t",
                 # The Datacube name for the associated data product
                 "product_name": "s2a_ard_granule",
                 # The Datacube name for the associated pixel-quality product (optional)
