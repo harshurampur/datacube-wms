@@ -132,60 +132,6 @@ layer_cfg = [
                         "scale_factor": 12.0
                     },
                     {
-                        "name": "cloud_masked_rgb",
-                        "title": "Simple RGB with cloud masking",
-                        "abstract": "Simple true-colour image, using the red, green and blue bands, with cloud masking",
-                        "components": {
-                            "red": {
-                                "red": 1.0
-                            },
-                            "green": {
-                                "green": 1.0
-                            },
-                            "blue": {
-                                "blue": 1.0
-                            }
-                        },
-                        # PQ masking example
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                },
-                            },
-                        ],
-                        "scale_factor": 12.0
-                    },
-                    {
-                        "name": "cloud_and_shadow_masked_rgb",
-                        "title": "Simple RGB with cloud and cloud shadow masking",
-                        "abstract": "Simple true-colour image, using the RGB bands, with cloud and cloud shadow masking",
-                        "components": {
-                            "red": {
-                                "red": 1.0
-                            },
-                            "green": {
-                                "green": 1.0
-                            },
-                            "blue": {
-                                "blue": 1.0
-                            }
-                        },
-                        # PQ masking example
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                    "cloud_shadow_acca": "no_cloud_shadow",
-                                    "cloud_shadow_fmask": "no_cloud_shadow",
-                                },
-                            },
-                        ],
-                        "scale_factor": 12.0
-                    },
-                    {
                         "name": "extended_rgb",
                         "title": "Extended RGB",
                         "abstract": "Extended true-colour image, incorporating the coastal aerosol band",
@@ -375,24 +321,6 @@ layer_cfg = [
                         "range": [0.0, 1.0],
                     },
                     {
-                        "name": "ndvi_cloudmask",
-                        "title": "NDVI with cloud masking",
-                        "abstract": "Normalised Difference Vegetation Index (with cloud masking) - a derived index that correlates well with the existence of vegetation",
-                        "heat_mapped": True,
-                        "index_function": lambda data: (data["nir"] - data["red"]) / (data["nir"] + data["red"]),
-                        "needed_bands": ["red", "nir"],
-                        # Areas where the index_function returns outside the range are masked.
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                    },
-                            },
-                        ],
-                    },
-                    {
                         "name": "ndwi",
                         "title": "NDWI",
                         "abstract": "Normalised Difference Water Index - a derived index that correlates well with the existence of water",
@@ -412,100 +340,6 @@ layer_cfg = [
                     },
                     # Mask layers - examples of how to display raw pixel quality data.
                     # This works by creatively mis-using the Heatmap style class.
-                    {
-                        "name": "cloud_mask",
-                        "title": "Cloud Mask",
-                        "abstract": "Highlight pixels with cloud.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.1,
-                        "needed_bands": ["red"],
-                        "range": [0.0, 1.0],
-                        # Mask flags normally describe which areas SHOULD be shown.
-                        # (i.e. pixels for which any of the declared flags are true)
-                        # pq_mask_invert is intended to invert this logic.
-                        # (i.e. pixels for which none of the declared flags are true)
-                        #
-                        # i.e. Specifying like this shows pixels which are not clouds in either metric.
-                        #      Specifying "cloud" and setting the "pq_mask_invert" to False would
-                        #      show pixels which are not clouds in both metrics.
-                        "pq_masks": [
-                            {
-                                "invert": True,
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "cloud_and_shadow_mask",
-                        "title": "Cloud and Shadow Mask",
-                        "abstract": "Highlight pixels with cloud or cloud shadow.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.6,
-                        "needed_bands": ["red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "invert": True,
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                    "cloud_shadow_acca": "no_cloud_shadow",
-                                    "cloud_shadow_fmask": "no_cloud_shadow",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "cloud_acca",
-                        "title": "Cloud acca Mask",
-                        "abstract": "Highlight pixels with cloud.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.4,
-                        "needed_bands": ["red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "cloud",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "CFmask",
-                        "title": "Cloud fmask Mask",
-                        "abstract": "Highlight pixels with cloud.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.8,
-                        "needed_bands": ["red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "CFmask": "cloud",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "contiguity",
-                        "title": "Contiguous Data Mask",
-                        "abstract": "Highlight pixels with non-contiguous data",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["red"] * 0.0 + 0.3,
-                        "needed_bands": ["red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "contiguity": False
-                                },
-                            },
-                        ],
-                    },
                     # Hybrid style - mixes a linear mapping and a heat mapped index
                     {
                         "name": "rgb_ndvi",
@@ -528,37 +362,6 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
-                    },
-                    {
-                        "name": "rgb_ndvi_cloudmask",
-                        "title": "NDVI plus RGB (Cloud masked)",
-                        "abstract": "Normalised Difference Vegetation Index (blended with RGB and cloud masked) - a derived index that correlates well with the existence of vegetation",
-                        "component_ratio": 0.6,
-                        "heat_mapped": True,
-                        "index_function": lambda data: (data["nir"] - data["red"]) / (data["nir"] + data["red"]),
-                        "needed_bands": ["red", "nir"],
-                        # Areas where the index_function returns outside the range are masked.
-                        "range": [0.0, 1.0],
-                        "components": {
-                            "red": {
-                                "red": 1.0
-                            },
-                            "green": {
-                                "green": 1.0
-                            },
-                            "blue": {
-                                "blue": 1.0
-                            }
-                        },
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                },
-                            },
-                        ],
                         "scale_factor": 12.0
                     }
                 ],
@@ -629,60 +432,6 @@ layer_cfg = [
                             }
                         },
                         # Used to clip off very bright areas.
-                        "scale_factor": 12.0
-                    },
-                    {
-                        "name": "cloud_masked_rgb",
-                        "title": "Simple RGB with cloud masking",
-                        "abstract": "Simple true-colour image, using the red, green and blue bands, with cloud masking",
-                        "components": {
-                            "red": {
-                                "t_red": 1.0
-                            },
-                            "green": {
-                                "t_green": 1.0
-                             },
-                            "blue": {
-                                "t_blue": 1.0
-                            }
-                        },
-                        # PQ masking example
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                },
-                            },
-                        ],
-                        "scale_factor": 12.0
-                    },
-                    {
-                        "name": "cloud_and_shadow_masked_rgb",
-                        "title": "Simple RGB with cloud and cloud shadow masking",
-                        "abstract": "Simple true-colour image, using the red, green and blue bands, with cloud and cloud shadow masking",
-                        "components": {
-                            "red": {
-                                "t_red": 1.0
-                            },
-                            "green": {
-                                "t_green": 1.0
-                            },
-                            "blue": {
-                                "t_blue": 1.0
-                            }
-                        },
-                        # PQ masking example
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                    "cloud_shadow_acca": "no_cloud_shadow",
-                                    "cloud_shadow_fmask": "no_cloud_shadow",
-                                },
-                            },
-                        ],
                         "scale_factor": 12.0
                     },
                     {
@@ -875,24 +624,6 @@ layer_cfg = [
                         "range": [0.0, 1.0],
                     },
                     {
-                        "name": "ndvi_cloudmask",
-                        "title": "NDVI with cloud masking",
-                        "abstract": "Normalised Difference Vegetation Index (with cloud masking) - a derived index that correlates well with the existence of vegetation",
-                        "heat_mapped": True,
-                        "index_function": lambda data: (data["t_nir"] - data["t_red"]) / (data["t_nir"] + data["t_red"]),
-                        "needed_bands": ["t_red", "t_nir"],
-                        # Areas where the index_function returns outside the range are masked.
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                    },
-                            },
-                        ],
-                    },
-                    {
                         "name": "ndwi",
                         "title": "NDWI",
                         "abstract": "Normalised Difference Water Index - a derived index that correlates well with the existence of water",
@@ -912,100 +643,6 @@ layer_cfg = [
                     },
                     # Mask layers - examples of how to display raw pixel quality data.
                     # This works by creatively mis-using the Heatmap style class.
-                    {
-                        "name": "cloud_mask",
-                        "title": "Cloud Mask",
-                        "abstract": "Highlight pixels with cloud.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["t_red"] * 0.0 + 0.1,
-                        "needed_bands": ["t_red"],
-                        "range": [0.0, 1.0],
-                        # Mask flags normally describe which areas SHOULD be shown.
-                        # (i.e. pixels for which any of the declared flags are true)
-                        # pq_mask_invert is intended to invert this logic.
-                        # (i.e. pixels for which none of the declared flags are true)
-                        #
-                        # i.e. Specifying like this shows pixels which are not clouds in either metric.
-                        #      Specifying "cloud" and setting the "pq_mask_invert" to False would
-                        #      show pixels which are not clouds in both metrics.
-                        "pq_masks": [
-                            {
-                                "invert": True,
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "cloud_and_shadow_mask",
-                        "title": "Cloud and Shadow Mask",
-                        "abstract": "Highlight pixels with cloud or cloud shadow.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["t_red"] * 0.0 + 0.6,
-                        "needed_bands": ["t_red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "invert": True,
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                    "cloud_shadow_acca": "no_cloud_shadow",
-                                    "cloud_shadow_fmask": "no_cloud_shadow",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "cloud_acca",
-                        "title": "Cloud acca Mask",
-                        "abstract": "Highlight pixels with cloud.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["t_red"] * 0.0 + 0.4,
-                        "needed_bands": ["t_red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "cloud",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "CFmask",
-                        "title": "Cloud fmask Mask",
-                        "abstract": "Highlight pixels with cloud.",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["t_red"] * 0.0 + 0.8,
-                        "needed_bands": ["t_red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "CFmask": "cloud",
-                                },
-                            },
-                        ],
-                    },
-                    {
-                        "name": "contiguity",
-                        "title": "Contiguous Data Mask",
-                        "abstract": "Highlight pixels with non-contiguous data",
-                        "heat_mapped": True,
-                        "index_function": lambda data: data["t_red"] * 0.0 + 0.3,
-                        "needed_bands": ["t_red"],
-                        "range": [0.0, 1.0],
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "contiguity": False
-                                },
-                            },
-                        ],
-                    },
                     # Hybrid style - mixes a linear mapping and a heat mapped index
                     {
                         "name": "rgb_ndvi",
@@ -1028,37 +665,6 @@ layer_cfg = [
                                 "t_blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
-                    },
-                    {
-                        "name": "rgb_ndvi_cloudmask",
-                        "title": "NDVI plus RGB (Cloud masked)",
-                        "abstract": "Normalised Difference Vegetation Index (blended with RGB and cloud masked) - a derived index that correlates well with the existence of vegetation",
-                        "component_ratio": 0.6,
-                        "heat_mapped": True,
-                        "index_function": lambda data: (data["t_nir"] - data["t_red"]) / (data["t_nir"] + data["t_red"]),
-                        "needed_bands": ["t_red", "t_nir"],
-                        # Areas where the index_function returns outside the range are masked.
-                        "range": [0.0, 1.0],
-                        "components": {
-                            "red": {
-                                "t_red": 1.0
-                            },
-                            "green": {
-                                "t_green": 1.0
-                            },
-                            "blue": {
-                                "t_blue": 1.0
-                            }
-                        },
-                        "pq_masks": [
-                            {
-                                "flags": {
-                                    "cloud_acca": "no_cloud",
-                                    "CFmask": "no_cloud",
-                                },
-                            },
-                        ],
                         "scale_factor": 12.0
                     }
                 ],
