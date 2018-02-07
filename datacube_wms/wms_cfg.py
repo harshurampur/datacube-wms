@@ -61,9 +61,9 @@ layer_cfg = [
     {
         # Name and title of the platform layer.
         # Platform layers are not mappable. The name is for internal server use only.
-        "name": "Sentinel-2A",
-        "title": "Sentinel-2A",
-        "abstract": "Sentinel 2 Alpha ARD data",
+        "name": "LANDSAT_8",
+        "title": "Landsat-8",
+        "abstract": "Landsat 8 level 1 USGS",
 
         # Products available for this platform.
         # For each product, the "name" is the Datacube name, and the label is used
@@ -71,21 +71,21 @@ layer_cfg = [
         "products": [
             {
                 # Included as a keyword  for the layer
-                "label": "NBAR",
+                "label": "Level1",
                 # Included as a keyword  for the layer
-                "type": "S2MSIARD",
+                "type": "Level1",
                 # Included as a keyword  for the layer
-                "variant": "MSI",
+                "variant": "OLI/TIRS",
                 # The WMS name for the layer
-                "name": "s2a_ard_granule_nbar",
+                "name": "Landsat8_level1",
                 # The Datacube name for the associated data product
-                "product_name": "s2a_ard_granule",
+                "product_name": "ls8_usgs_cog",
                 # The Datacube name for the associated pixel-quality product (optional)
                 # The name of the associated Datacube pixel-quality product
-                "pq_dataset": "s2a_ard_granule",
+                #"pq_dataset": "s2a_ard_granule",
                 # The name of the measurement band for the pixel-quality product
                 # (Only required if pq_dataset is set)
-                "pq_band": "pixel_quality",
+                #"pq_band": "pixel_quality",
                 # Min zoom factor - sets the zoom level where the cutover from indicative polygons
                 # to actual imagery occurs.
                 "min_zoom_factor": 500.0,
@@ -129,7 +129,7 @@ layer_cfg = [
                             }
                         },
                         # Used to clip off very bright areas.
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "extended_rgb",
@@ -147,7 +147,7 @@ layer_cfg = [
                                  "aerosol": 0.4
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "wideband",
@@ -170,7 +170,7 @@ layer_cfg = [
                                 "aerosol": 0.255,
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "infra_red",
@@ -187,7 +187,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "aerosol",
@@ -204,7 +204,7 @@ layer_cfg = [
                                 "aerosol": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "blue",
@@ -221,7 +221,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "green",
@@ -238,7 +238,7 @@ layer_cfg = [
                                 "green": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "red",
@@ -255,7 +255,7 @@ layer_cfg = [
                                 "red": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "nir",
@@ -272,7 +272,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "swir1",
@@ -289,7 +289,7 @@ layer_cfg = [
                                 "swir1": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     {
                         "name": "swir2",
@@ -306,7 +306,7 @@ layer_cfg = [
                                 "swir2": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     },
                     #
                     # Examples of non-linear heat-mapped styles.
@@ -362,7 +362,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_factor": 80.0
                     }
                 ],
                 # Default style (if request does not specify style)
@@ -371,8 +371,11 @@ layer_cfg = [
                 #  not required by the standard.)
                 "default_style": "simple_rgb",
             },
+        ],
+    },
+]
 
-            {
+to_nbart={
                 # Included as a keyword  for the layer
                 "label": "NBAR-T",
                 # Included as a keyword  for the layer
