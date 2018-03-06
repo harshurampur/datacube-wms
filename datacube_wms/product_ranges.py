@@ -1,6 +1,9 @@
 from datetime import date, datetime, timedelta
 import datacube
-from datacube_wms.wms_cfg import service_cfg, layer_cfg
+try:
+    from datacube_wms.wms_cfg_local import service_cfg, layer_cfg
+except:
+    from datacube_wms.wms_cfg import service_cfg, layer_cfg
 from psycopg2.extras import Json
 
 
@@ -88,7 +91,6 @@ def get_sqlconn(dc):
 def get_ids_in_db(conn):
     results = conn.execute("select id from wms.product_ranges")
     ids =  [r["id"] for r in results]
-    print (ids)
     return ids
 
 

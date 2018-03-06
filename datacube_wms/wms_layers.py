@@ -1,4 +1,7 @@
-from datacube_wms.wms_cfg import service_cfg, layer_cfg
+try:
+    from datacube_wms.wms_cfg_local import layer_cfg
+except:
+    from datacube_wms.wms_cfg import layer_cfg
 from datacube_wms.product_ranges import get_ranges
 from datacube_wms.cube_pool import get_cube, release_cube
 from datacube_wms.band_mapper import StyleDef
@@ -45,7 +48,7 @@ class ProductLayerDef(object):
         self.always_fetch_bands = product_cfg.get("always_fetch_bands", [])
         self.data_manual_merge = product_cfg.get("data_manual_merge", False)
         self.band_drill = product_cfg.get("band_drill", [])
-
+        self.solar_correction = product_cfg.get("apply_solar_corrections", False)
         if self.pq_name:
             self.pq_product = dc.index.products.get_by_name(self.pq_name)
             self.info_mask = ~0
