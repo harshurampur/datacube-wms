@@ -108,6 +108,7 @@ layer_cfg = [
                 # Flags listed here are ignored in GetFeatureInfo requests.
                 # (defaults to empty list)
                 "ignore_info_flags": [],
+                "apply_solar_corrections": True,
 
                 # Bands to include in time-dimension "pixel drill".
                 # Don't activate in production unless you really know what you're doing.
@@ -143,7 +144,7 @@ layer_cfg = [
                         },
                         # The raw band value range to be compressed to an 8 bit range for the output image tiles.
                         # Band values outside this range are clipped to 0 or 255 as appropriate.
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "cloud_masked_rgb",
@@ -168,7 +169,7 @@ layer_cfg = [
                                 }
                             }
                         ],
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "extended_rgb",
@@ -186,7 +187,7 @@ layer_cfg = [
                                 "coastal_aerosol": 0.4
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "wideband",
@@ -209,7 +210,7 @@ layer_cfg = [
                                 "coastal_aerosol": 0.255,
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "infra_red",
@@ -226,7 +227,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "coastal_aerosol",
@@ -243,7 +244,7 @@ layer_cfg = [
                                 "coastal_aerosol": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "blue",
@@ -260,7 +261,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "green",
@@ -277,7 +278,7 @@ layer_cfg = [
                                 "green": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "red",
@@ -294,7 +295,7 @@ layer_cfg = [
                                 "red": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "nir",
@@ -311,7 +312,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "swir1",
@@ -328,7 +329,7 @@ layer_cfg = [
                                 "swir1": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     {
                         "name": "swir2",
@@ -345,7 +346,7 @@ layer_cfg = [
                                 "swir2": 1.0
                             }
                         },
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     },
                     #
                     # Examples of non-linear heat-mapped styles.
@@ -536,7 +537,7 @@ layer_cfg = [
                                 }
                             }
                         ],
-                        "scale_range": [6500.0,19000.0]
+                        "scale_range": [9500.0, 22000.0]
                     }
                 ],
                 # Default style (if request does not specify style)
