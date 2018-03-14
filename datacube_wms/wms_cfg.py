@@ -110,6 +110,13 @@ layer_cfg = [
                 "ignore_info_flags": [],
                 "apply_solar_corrections": True,
 
+                                # A function that extracts the "sub-product" id (e.g. path number) from a dataset. Function should return a (small) integer
+                # If None or not specified, the product has no sub-layers.
+                "sub_product_extractor": lambda ds: int(s3_path_pattern.search(ds.uris[0]).group("path")),
+                # A prefix used to describe the sub-layer in the GetCapabilities response.
+                # E.g. sub-layer 109 will be described as "Landsat Path 109"
+                "sub_product_label": "Landsat Path",
+
                 # Bands to include in time-dimension "pixel drill".
                 # Don't activate in production unless you really know what you're doing.
                 # "band_drill": ["nir", "red", "green", "blue"],
