@@ -4,6 +4,8 @@ response_cfg = {
     "Access-Control-Allow-Origin": "*",  # CORS header
 }
 
+s3_path_pattern = re.compile('L8/(?P<path>[0-9]*)')
+
 service_cfg = {
     # Required config
     "title": "WMS server for Australian Landsat Datacube",
