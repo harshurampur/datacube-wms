@@ -5,6 +5,7 @@ s3_path_pattern = re.compile('L8/(?P<path>[0-9]*)')
 
 response_cfg = {
     "Access-Control-Allow-Origin": "*",  # CORS header
+    "Cache-Control": "public, max-age=3600"
 }
 
 service_cfg = {
