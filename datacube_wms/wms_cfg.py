@@ -77,7 +77,7 @@ layer_cfg = [
             # Included as a keyword  for the layer
                 "label": "Level 2",
                 # Included as a keyword  for the layer
-                "type": "surface reflectance",
+                "type": "Level1",
                 # Included as a keyword  for the layer
                 "variant": "Level 2",
                 # The WMS name for the layer
@@ -133,8 +133,6 @@ layer_cfg = [
                 # into a single rgb image.
                 # The examples here are ad hoc
                 #
-                # LS7:  http://www.indexdatabase.de/db/s-single.php?id=8
-                # LS8:  http://www.indexdatabase.de/db/s-single.php?id=168
                 "styles": [
                     # Examples of styles which are linear combinations of the available spectral bands.
                     #
