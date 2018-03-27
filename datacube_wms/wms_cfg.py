@@ -105,7 +105,7 @@ layer_cfg = [
                 "time_zone": 9,
                 # Extent mask function
                 # Determines what portions of dataset is potentially meaningful data.
-                "extent_mask_func": lambda data, band: data[band] != data[band].attrs['nodata']
+                "extent_mask_func": lambda data, band: data[band] != data[band].attrs['nodata'],
                
                 # Flags listed here are ignored in GetFeatureInfo requests.
                 # (defaults to empty list)
