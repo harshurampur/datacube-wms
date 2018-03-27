@@ -105,16 +105,16 @@ layer_cfg = [
                 "time_zone": 9,
                 # Extent mask function
                 # Determines what portions of dataset is potentially meaningful data.
-                "extent_mask_func": [
-                   # lambda data, band: data["quality"] != 1,
-                   # lambda data, band: data[band] != data[band].attrs['nodata']
-                ],
+                "extent_mask_func": lambda data, band: data[band] != data[band].attrs['nodata']
+               
                 # Flags listed here are ignored in GetFeatureInfo requests.
                 # (defaults to empty list)
                 "ignore_info_flags": [],
-                "apply_solar_corrections": True,
+                "data_manual_merge": True,
+                "always_fetch_bands": [ ],
+                "apply_solar_corrections": False,
 
-                                # A function that extracts the "sub-product" id (e.g. path number) from a dataset. Function should return a (small) integer
+                # A function that extracts the "sub-product" id (e.g. path number) from a dataset. Function should return a (small) integer
                 # If None or not specified, the product has no sub-layers.
                 # "sub_product_extractor": lambda ds: int(s3_path_pattern.search(ds.uris[0]).group("path")),
                 # A prefix used to describe the sub-layer in the GetCapabilities response.
@@ -153,7 +153,7 @@ layer_cfg = [
                         },
                         # The raw band value range to be compressed to an 8 bit range for the output image tiles.
                         # Band values outside this range are clipped to 0 or 255 as appropriate.
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "infra_red",
@@ -170,7 +170,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "blue",
@@ -187,7 +187,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "green",
@@ -204,7 +204,7 @@ layer_cfg = [
                                 "green": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "red",
@@ -221,7 +221,7 @@ layer_cfg = [
                                 "red": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "nir",
@@ -238,7 +238,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "swir1",
@@ -255,7 +255,7 @@ layer_cfg = [
                                 "swir1": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "swir2",
@@ -272,7 +272,7 @@ layer_cfg = [
                                 "swir2": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                     #
                     # Examples of non-linear heat-mapped styles.
@@ -400,7 +400,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_range": [2000.0, 10000.0]
+                        "scale_range": [0.0, 3000.0]
                     },
                 ],
                 # Default style (if request does not specify style)
