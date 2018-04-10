@@ -102,6 +102,22 @@ layer_cfg = [
                 # Flags listed here are ignored in GetFeatureInfo requests.
                 # (defaults to empty list)
                 "ignore_info_flags": [],
+                # Bands to include in time-dimension "pixel drill".
+                # WARNING: This is highly inefficient in the current datacube architecture.
+                #          Don't activate in production unless you really know what you're doing.
+                # "band_drill": ["nir", "red", "green", "blue"],
+
+                # Set to true if the band product dataset extents include nodata regions.
+                "data_manual_merge": False,
+                # Set to true if the pq product dataset extents include nodata regions.
+                "pq_manual_merge": False,
+                # Bands to always fetch from the Datacube, even if it is not used by the active style.
+                # Useful for when a particular band is always needed for the extent_mask_func,
+                "always_fetch_bands": [],
+                # Apply corrections for solar angle, for "Level 1" products.
+                # (Defaults to false - should not be used for NBAR/NBAR-T or other Analysis Ready products
+                "apply_solar_corrections": False,
+
                 # Styles.
                 #
                 # See band_mapper.py
@@ -128,8 +144,9 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        # Used to clip off very bright areas.
-                        "scale_factor": 12.0
+                        # The raw band value range to be compressed to an 8 bit range for the output image tiles.
+                        # Band values outside this range are clipped to 0 or 255 as appropriate.
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "extended_rgb",
@@ -147,7 +164,7 @@ layer_cfg = [
                                  "aerosol": 0.4
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "wideband",
@@ -170,7 +187,7 @@ layer_cfg = [
                                 "aerosol": 0.255,
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "infra_red",
@@ -187,7 +204,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "aerosol",
@@ -204,7 +221,7 @@ layer_cfg = [
                                 "aerosol": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "blue",
@@ -221,7 +238,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "green",
@@ -238,7 +255,7 @@ layer_cfg = [
                                 "green": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "red",
@@ -255,7 +272,7 @@ layer_cfg = [
                                 "red": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "nir",
@@ -272,7 +289,7 @@ layer_cfg = [
                                 "nir": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "swir1",
@@ -289,7 +306,7 @@ layer_cfg = [
                                 "swir1": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "swir2",
@@ -306,7 +323,7 @@ layer_cfg = [
                                 "swir2": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     #
                     # Examples of non-linear heat-mapped styles.
@@ -362,7 +379,7 @@ layer_cfg = [
                                 "blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     }
                 ],
                 # Default style (if request does not specify style)
@@ -405,6 +422,22 @@ layer_cfg = [
                 # Flags listed here are ignored in GetFeatureInfo requests.
                 # (defaults to empty list)
                 "ignore_info_flags": [],
+                # Bands to include in time-dimension "pixel drill".
+                # WARNING: This is highly inefficient in the current datacube architecture.
+                #          Don't activate in production unless you really know what you're doing.
+                # "band_drill": ["nir", "red", "green", "blue"],
+
+                # Set to true if the band product dataset extents include nodata regions.
+                "data_manual_merge": False,
+                # Set to true if the pq product dataset extents include nodata regions.
+                "pq_manual_merge": False,
+                # Bands to always fetch from the Datacube, even if it is not used by the active style.
+                # Useful for when a particular band is always needed for the extent_mask_func,
+                "always_fetch_bands": [],
+                # Apply corrections for solar angle, for "Level 1" products.
+                # (Defaults to false - should not be used for NBAR/NBAR-T or other Analysis Ready products
+                "apply_solar_corrections": False,
+
                 # Styles.
                 #
                 # See band_mapper.py
@@ -432,7 +465,7 @@ layer_cfg = [
                             }
                         },
                         # Used to clip off very bright areas.
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "extended_rgb",
@@ -450,7 +483,7 @@ layer_cfg = [
                                 "t_aerosol": 0.4
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "wideband",
@@ -473,7 +506,7 @@ layer_cfg = [
                                 "t_aerosol": 0.255,
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "infra_red",
@@ -490,7 +523,7 @@ layer_cfg = [
                                 "t_nir": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "aerosol",
@@ -507,7 +540,7 @@ layer_cfg = [
                                 "t_aerosol": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "blue",
@@ -524,7 +557,7 @@ layer_cfg = [
                                 "t_blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "green",
@@ -541,7 +574,7 @@ layer_cfg = [
                                 "t_green": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "red",
@@ -558,7 +591,7 @@ layer_cfg = [
                                 "t_red": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "nir",
@@ -575,7 +608,7 @@ layer_cfg = [
                                 "t_nir": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "swir1",
@@ -592,7 +625,7 @@ layer_cfg = [
                                 "t_swir1": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     {
                         "name": "swir2",
@@ -609,7 +642,7 @@ layer_cfg = [
                                 "t_swir2": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     },
                     #
                     # Examples of non-linear heat-mapped styles.
@@ -665,7 +698,7 @@ layer_cfg = [
                                 "t_blue": 1.0
                             }
                         },
-                        "scale_factor": 12.0
+                        "scale_range": [0.0, 3000.0]
                     }
                 ],
                 # Default style (if request does not specify style)
@@ -677,184 +710,3 @@ layer_cfg = [
         ],
     },
 ]
-
-to_be_added_to_layer_cfg = {
-    "name": "LANDSAT_7",
-    "title": "Landsat 7",
-    "abstract": "Images from the Landsat 7 satellite",
-
-    "products": [
-        {
-            "label": "NBAR-T",
-            "type": "surface reflectance",
-            "variant": "terrain corrected",
-            "name": "ls7_nbart_albers",
-            "product_name": "ls7_nbart_albers",
-            "pq_dataset": "ls7_pq_albers",
-            "pq_band": "pixelquality",
-            "pq_mask_flags": {
-                "contiguous": True
-            },
-            "min_zoom_factor": 500.0
-        },
-    ],
-    "styles": [
-        {
-            "name": "simple_rgb",
-            "title": "Simple RGB",
-            "abstract": "Simple true-colour image, using the red, green and blue bands",
-            "components": {
-                "red": {
-                    "red": 1.0
-                },
-                "green": {
-                    "green": 1.0
-                },
-                "blue": {
-                    "blue": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "wideband",
-            "title": "Wideband false-colour",
-            "abstract": "False-colour image, incorporating all available spectral bands",
-            "components": {
-                "red": {
-                    "swir2": 0.5,
-                    "swir1": 0.5,
-                },
-                "green": {
-                    "nir": 0.5,
-                    "red": 0.5,
-                },
-                "blue": {
-                    "green": 0.5,
-                    "blue": 0.5,
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "infra_red",
-            "title": "False colour multi-band infra-red",
-            "abstract": "Simple false-colour image, using the near and short-wave infra-red bands",
-            "components": {
-                "red": {
-                    "swir1": 1.0
-                },
-                "green": {
-                    "swir2": 1.0
-                },
-                "blue": {
-                    "nir": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "blue",
-            "title": "Spectral band 1 - Blue",
-            "abstract": "Blue band, approximately 450nm to 520nm",
-            "components": {
-                "red": {
-                    "blue": 1.0
-                },
-                "green": {
-                    "blue": 1.0
-                },
-                "blue": {
-                    "blue": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "green",
-            "title": "Spectral band 2 - Green",
-            "abstract": "Green band, approximately 530nm to 610nm",
-            "components": {
-                "red": {
-                    "green": 1.0
-                },
-                "green": {
-                    "green": 1.0
-                },
-                "blue": {
-                    "green": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "red",
-            "title": "Spectral band 3 - Red",
-            "abstract": "Red band, roughly 630nm to 690nm",
-            "components": {
-                "red": {
-                    "red": 1.0
-                },
-                "green": {
-                    "red": 1.0
-                },
-                "blue": {
-                    "red": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "nir",
-            "title": "Spectral band 4 - Near infra-red",
-            "abstract": "Near infra-red band, roughly 780nm to 840nm",
-            "components": {
-                "red": {
-                    "nir": 1.0
-                },
-                "green": {
-                    "nir": 1.0
-                },
-                "blue": {
-                    "nir": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "swir1",
-            "title": "Spectral band 5 - Short wave infra-red 1",
-            "abstract": "Short wave infra-red band 1, roughly 1550nm to 1750nm",
-            "components": {
-                "red": {
-                    "swir1": 1.0
-                },
-                "green": {
-                    "swir1": 1.0
-                },
-                "blue": {
-                    "swir1": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        },
-        {
-            "name": "swir2",
-            "title": "Spectral band 6 - Short wave infra-red 2",
-            "abstract": "Short wave infra-red band 2, roughly 2090nm to 2220nm",
-            "components": {
-                "red": {
-                    "swir2": 1.0
-                },
-                "green": {
-                    "swir2": 1.0
-                },
-                "blue": {
-                    "swir2": 1.0
-                }
-            },
-            "scale_factor": 12.0
-        }
-    ],
-    "default_style": "simple_rgb",
-}
