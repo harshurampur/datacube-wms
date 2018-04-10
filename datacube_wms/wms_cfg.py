@@ -1,12 +1,16 @@
 # Static config for the wms metadata.
 
+import re
+s3_path_pattern = re.compile('L8/(?P<path>[0-9]*)')
+
 response_cfg = {
     "Access-Control-Allow-Origin": "*",  # CORS header
+    "Cache-Control": "public, max-age=3600"
 }
 
 service_cfg = {
     # Required config
-    "title": "WMS server for Australian Landsat Datacube",
+    "title": "WMS server for Australian Geomedian Level2 Product Datacube",
     "url": "http://9xjfk12.nexus.csiro.au/datacube_wms",
     "published_CRSs": {
         "EPSG:3857": {  # Web Mercator
@@ -32,7 +36,7 @@ service_cfg = {
     # Optional config - may be set to blank/empty
     "abstract": """Historic Landsat imagery for Australia.""",
     "keywords": [
-        "landsat",
+        "Geomedian",
         "australia",
         "time-series",
     ],
@@ -61,31 +65,34 @@ layer_cfg = [
     {
         # Name and title of the platform layer.
         # Platform layers are not mappable. The name is for internal server use only.
-        "name": "Sentinel-2A",
-        "title": "Sentinel-2A",
-        "abstract": "Sentinel 2 Alpha ARD data",
+        "name": "Cambodia_Geomedian_SR",
+        "title": "Cambodia_Geomedian_L2-SR",
+        "abstract": "Images from the Geomedian Surface Reflectance on Level2 Products",
 
         # Products available for this platform.
         # For each product, the "name" is the Datacube name, and the label is used
         # to describe the label to end-users.
         "products": [
             {
+            # Included as a keyword  for the layer
+                "label": "Level 2",
                 # Included as a keyword  for the layer
-                "label": "NBAR",
+                "type": "Level2",
                 # Included as a keyword  for the layer
-                "type": "S2MSIARD",
-                # Included as a keyword  for the layer
-                "variant": "MSI",
+                "variant": "Level 2",
                 # The WMS name for the layer
-                "name": "s2a_ard_granule_nbar",
+                "name": "ls_level2_geomedian_annual",
                 # The Datacube name for the associated data product
-                "product_name": "s2a_ard_granule",
+                "product_name": "ls_level2_geomedian_annual",
                 # The Datacube name for the associated pixel-quality product (optional)
                 # The name of the associated Datacube pixel-quality product
-                "pq_dataset": "s2a_ard_granule",
+                # "pq_dataset": "ls8_level1_usgs",
                 # The name of the measurement band for the pixel-quality product
                 # (Only required if pq_dataset is set)
-                "pq_band": "pixel_quality",
+                # "pq_manual_data_merge": True,
+                # "data_manual_merge": True,
+                # "pq_band": "quality",
+                # "always_fetch_bands": [ "quality" ],
                 # Min zoom factor - sets the zoom level where the cutover from indicative polygons
                 # to actual imagery occurs.
                 "min_zoom_factor": 500.0,
@@ -98,10 +105,12 @@ layer_cfg = [
                 "time_zone": 9,
                 # Extent mask function
                 # Determines what portions of dataset is potentially meaningful data.
-                "extent_mask_func": lambda data, band: (data[band] != data[band].attrs['nodata']),
+                "extent_mask_func": lambda data, band: data[band] != data[band].attrs['nodata'],
+               
                 # Flags listed here are ignored in GetFeatureInfo requests.
                 # (defaults to empty list)
                 "ignore_info_flags": [],
+<<<<<<< HEAD
                 # Bands to include in time-dimension "pixel drill".
                 # WARNING: This is highly inefficient in the current datacube architecture.
                 #          Don't activate in production unless you really know what you're doing.
@@ -118,6 +127,23 @@ layer_cfg = [
                 # (Defaults to false - should not be used for NBAR/NBAR-T or other Analysis Ready products
                 "apply_solar_corrections": False,
 
+=======
+                "data_manual_merge": True,
+                "always_fetch_bands": [ ],
+                "apply_solar_corrections": False,
+
+                # A function that extracts the "sub-product" id (e.g. path number) from a dataset. Function should return a (small) integer
+                # If None or not specified, the product has no sub-layers.
+                # "sub_product_extractor": lambda ds: int(s3_path_pattern.search(ds.uris[0]).group("path")),
+                # A prefix used to describe the sub-layer in the GetCapabilities response.
+                # E.g. sub-layer 109 will be described as "Landsat Path 109"
+                # "sub_product_label": "Landsat Path",
+
+                # Bands to include in time-dimension "pixel drill".
+                # Don't activate in production unless you really know what you're doing.
+                # "band_drill": ["nir", "red", "green", "blue"],
+
+>>>>>>> master
                 # Styles.
                 #
                 # See band_mapper.py
@@ -147,6 +173,7 @@ layer_cfg = [
                         # The raw band value range to be compressed to an 8 bit range for the output image tiles.
                         # Band values outside this range are clipped to 0 or 255 as appropriate.
                         "scale_range": [0.0, 3000.0]
+<<<<<<< HEAD
                     },
                     {
                         "name": "extended_rgb",
@@ -188,6 +215,8 @@ layer_cfg = [
                             }
                         },
                         "scale_range": [0.0, 3000.0]
+=======
+>>>>>>> master
                     },
                     {
                         "name": "infra_red",
@@ -205,6 +234,7 @@ layer_cfg = [
                             }
                         },
                         "scale_range": [0.0, 3000.0]
+<<<<<<< HEAD
                     },
                     {
                         "name": "aerosol",
@@ -222,6 +252,8 @@ layer_cfg = [
                             }
                         },
                         "scale_range": [0.0, 3000.0]
+=======
+>>>>>>> master
                     },
                     {
                         "name": "blue",
@@ -357,6 +389,78 @@ layer_cfg = [
                     },
                     # Mask layers - examples of how to display raw pixel quality data.
                     # This works by creatively mis-using the Heatmap style class.
+                    # {
+                    #    "name": "cloud_mask",
+                    #    "title": "Cloud Mask",
+                    #    "abstract": "Highlight pixels with cloud.",
+                    #    "heat_mapped": True,
+                    #    "index_function": lambda data: data["red"] * 0.0 + 0.1,
+                    #    "needed_bands": ["red"],
+                    #    "range": [0.0, 1.0],
+                    #    # Mask flags normally describe which areas SHOULD be shown.
+                        # (i.e. pixels for which any of the declared flags are true)
+                        # pq_mask_invert is intended to invert this logic.
+                        # (i.e. pixels for which none of the declared flags are true)
+                        #
+                        # i.e. Specifying like this shows pixels which are not clouds in either metric.
+                        #      Specifying "cloud" and setting the "pq_mask_invert" to False would
+                        #      show pixels which are not clouds in both metrics.
+                    #    "pq_masks": [
+                    #        {
+                    #            "flags": {
+                    #                "cloud": False,
+                    #            }
+                    #        }
+                    #    ],
+                    # },
+                    # {
+                    #    "name": "cloud_acca",
+                    #    "title": "Cloud acca Mask",
+                    #    "abstract": "Highlight pixels with cloud.",
+                    #    "heat_mapped": True,
+                    #    "index_function": lambda data: data["red"] * 0.0 + 0.4,
+                    #    "needed_bands": ["red"],
+                    #    "range": [0.0, 1.0],
+                    #    "pq_masks": [
+                    #        {
+                    #            "flags": {
+                    #                "cloud": True,
+                    #            }
+                    #        }
+                    #    ],
+                    # },
+                    # {
+                    #    "name": "cloud_fmask",
+                    #    "title": "Cloud fmask Mask",
+                    #    "abstract": "Highlight pixels with cloud.",
+                    #    "heat_mapped": True,
+                    #    "index_function": lambda data: data["red"] * 0.0 + 0.8,
+                    #    "needed_bands": ["red"],
+                    #    "range": [0.0, 1.0],
+                    #    "pq_masks": [
+                    #        {
+                    #            "flags": {
+                    #                "cloud_fmask": "cloud",
+                    #            },
+                    #        },
+                    #    ],
+                    # },
+                    # {
+                    #    "name": "contiguous_mask",
+                    #    "title": "Contiguous Data Mask",
+                    #    "abstract": "Highlight pixels with non-contiguous data",
+                    #    "heat_mapped": True,
+                    #    "index_function": lambda data: data["red"] * 0.0 + 0.3,
+                    #    "needed_bands": ["red"],
+                    #    "range": [0.0, 1.0],
+                    #    "pq_masks": [
+                    #        {
+                    #            "flags": {
+                    #                "contiguous": False
+                    #            },
+                    #        },
+                    #    ],
+                    # },
                     # Hybrid style - mixes a linear mapping and a heat mapped index
                     {
                         "name": "rgb_ndvi",
@@ -380,6 +484,7 @@ layer_cfg = [
                             }
                         },
                         "scale_range": [0.0, 3000.0]
+<<<<<<< HEAD
                     }
                 ],
                 # Default style (if request does not specify style)
@@ -700,13 +805,20 @@ layer_cfg = [
                         },
                         "scale_range": [0.0, 3000.0]
                     }
+=======
+                    },
+>>>>>>> master
                 ],
                 # Default style (if request does not specify style)
                 # MUST be defined in the styles list above.
                 # (Looks like Terria assumes this is the first style in the list, but this is
                 #  not required by the standard.)
                 "default_style": "simple_rgb",
-            },
-        ],
+            }
+        ]
     },
+<<<<<<< HEAD
 ]
+=======
+]
+>>>>>>> master

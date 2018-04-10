@@ -16,9 +16,12 @@ class StyleDefBase(object):
         self.title = style_cfg["title"]
         self.abstract = style_cfg["abstract"]
         self.masks = [ StyleMask(**mask_cfg) for mask_cfg in style_cfg.get("pq_masks", []) ]
+        self.needed_bands = set()
+        for band in self.product.always_fetch_bands:
+            self.needed_bands.add(band)
 
     def apply_masks(self, data, pq_data):
-        if pq_data:
+        if pq_data is not None:
             net_mask = None
             for mask in self.masks:
                 odc_mask = make_mask(pq_data, **mask.flags)
@@ -31,16 +34,29 @@ class StyleDefBase(object):
     def transform_data(self, data, extent_mask, *masks):
         pass
 
+class DynamicRangeCompression(StyleDefBase):
+    def __init__(self, product, style_cfg):
+        super(DynamicRangeCompression,self).__init__(product, style_cfg)
+        self.scale_factor = style_cfg.get("scale_factor")
+        if "scale_range" in style_cfg:
+            self.scale_min, self.scale_max = style_cfg["scale_range"]
+            self.gain = 255.0/(self.scale_max - self.scale_min)
+            self.offset = self.gain * self.scale_min
+        else:
+            self.scale_min = 0.0
+            self.scale_max = 255.0 * style_cfg["scale_factor"]
+            self.gain = 1.0 / style_cfg["scale_factor"]
+            self.offset = 0.0
+    def compress_band(self, imgband_data):
+        unclipped= imgband_data * self.gain - self.offset
+        return numpy.clip(unclipped.values, 1, 255)
 
-class LinearStyleDef(StyleDefBase):
+class LinearStyleDef(DynamicRangeCompression):
     def __init__(self, product, style_cfg):
         super(LinearStyleDef, self).__init__(product, style_cfg)
         self.red_components = style_cfg["components"]["red"]
         self.green_components = style_cfg["components"]["green"]
         self.blue_components = style_cfg["components"]["blue"]
-        self.scale_factor = style_cfg["scale_factor"]
-        if not hasattr(self, "needed_bands"):
-            self.needed_bands = set()
         for band in self.red_components.keys():
             self.needed_bands.add(band)
         for band in self.green_components.keys():
@@ -57,7 +73,8 @@ class LinearStyleDef(StyleDefBase):
         }
 
     def transform_data(self, data, pq_data, extent_mask):
-        data = data.where(extent_mask)
+        if extent_mask is not None:
+            data = data.where(extent_mask)
         data = self.apply_masks(data, pq_data)
         imgdata = Dataset()
         for imgband, components in self.components.items():
@@ -69,8 +86,7 @@ class LinearStyleDef(StyleDefBase):
                 else:
                     imgband_data = imgband_component
             dims = imgband_data.dims
-            imgband_data = numpy.clip(imgband_data.values / self.scale_factor, -1, 254) + 1
-            imgband_data = imgband_data.astype('uint8')
+            imgband_data = self.compress_band(imgband_data).astype('uint8')
             imgdata[imgband] = (dims, imgband_data)
         return imgdata
 
@@ -138,8 +154,6 @@ def hm_index_func_for_range(func, rmin, rmax, nan_mask=True):
 class HeatMappedStyleDef(StyleDefBase):
     def __init__(self, product, style_cfg):
         super(HeatMappedStyleDef, self).__init__(product, style_cfg)
-        if not hasattr(self, "needed_bands"):
-            self.needed_bands = set()
         for b in style_cfg["needed_bands"]:
             self.needed_bands.add(b)
         self._index_function = style_cfg["index_function"]
@@ -164,7 +178,8 @@ class HeatMappedStyleDef(StyleDefBase):
             img_band_raw_data = f(hm_index_data)
             img_band_data = numpy.clip(img_band_raw_data * 255.0, 0, 255).astype("uint8")
             imgdata[band] = (dims, img_band_data)
-        imgdata = imgdata.where(extent_mask)
+        if extent_mask is not None:
+            imgdata = imgdata.where(extent_mask)
         imgdata = self.apply_masks(imgdata, pq_data)
         imgdata = imgdata.astype("uint8")
         return imgdata
@@ -204,11 +219,10 @@ class HybridStyleDef(HeatMappedStyleDef, LinearStyleDef):
                 )
             )
             hmap_raw_data = f(hm_index_data)
-            unclipped_band_data = hmap_raw_data * 255.0 * (
-                1.0 - self.component_ratio) + self.component_ratio / self.scale_factor * imgband_component_data
-            img_band_data = numpy.clip(unclipped_band_data, 1, 254) + 1
-            img_band_data = img_band_data.astype("uint8")
-            imgdata[band] = (dims, img_band_data)
+            component_band_data = self.compress_band(component_band_data)
+            img_band_data = (hmap_raw_data * 255.0 * ( 1.0 - self.component_ratio)
+                                   + self.component_ratio * component_band_data)
+            imgdata[band] = (dims, img_band_data.astype("uint8"))
         imgdata = imgdata.where(extent_mask)
         imgdata = imgdata.where(hm_mask)
         imgdata = self.apply_masks(imgdata, pq_data)
